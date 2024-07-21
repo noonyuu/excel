@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    command: air
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/apicomparator
+    volumes: #マウントディレクトリ
+      - ./back:/app
+    depends_on:
+      - mongodb
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_HOST=${DB_ROOT_HOST}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - TZ=${TZ}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - excel_data:/var/lib/mysql
+    tty: true
+    stdin_open: true
+
+volumes:
+  excel_data:
