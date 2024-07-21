@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import { Login } from './feature/login/page/Login'
+import { Login } from './feature/login/page'
 import { useEffect, useState } from 'react'
 import { Warning } from './feature/warning/page/Warning'
 
